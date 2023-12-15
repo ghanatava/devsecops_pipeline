@@ -20,7 +20,7 @@ pipeline{
     stage ("Deploy"){
       steps{
         sshagent(['ubuntu (prod)']){
-          sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/webapp/webapp-master/target/*.war ubuntu@ip-172-31-14-104:/home/ubuntu/prod/apache-tomcat-9.0.84/webapps/webapp.war"
+          sh "scp -o /var/lib/jenkins/workspace/webapp/webapp-master/target/*.war ubuntu@ip-172-31-14-104:/home/ubuntu/prod/apache-tomcat-9.0.84/webapps/webapp.war"
           
         }
       }
