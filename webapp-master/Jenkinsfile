@@ -14,7 +14,8 @@ pipeline{
     }
     stage("build"){
       steps{
-        sh "mvn -f /devsecops_pipeline/webapp-master/pom.xml clean package"
+        sh "cd devsecops_pipeline/webapp-master"
+        sh "mvn clean package"
       }
     }
   }
