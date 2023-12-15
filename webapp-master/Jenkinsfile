@@ -20,20 +20,21 @@ pipeline{
         sh "cat trufflehog"
       }
     }
-    
-    stage("build"){
-      steps{
-        sh "mvn -f /var/lib/jenkins/workspace/webapp/webapp-master/pom.xml clean package "
-      }
-    }
     stage ("SAST"){
       steps{
         withSonarQubeEnv("sonar"){
+          sh "cd webapp-master"
           sh "mvn sonar:sonar"
           sh "cat target/sonar/report-task.txt"
         }
       }
     }
+    stage("build"){
+      steps{
+        sh "mvn -f /var/lib/jenkins/workspace/webapp/webapp-master/pom.xml clean package "
+      }
+    }
+
     stage ("Deploy"){
       steps{
         sshagent(credentials: ['prod']){
