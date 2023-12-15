@@ -14,8 +14,10 @@ pipeline{
     }
     stage("build"){
       steps{
-        sh "cd devsecops_pipeline/webapp-master"
-        sh "mvn clean package"
+        dir('devsecops_pipeline/webapp-master') {
+                    // Run Maven clean and package commands
+                    sh 'mvn clean package'
+        }
       }
     }
   }
