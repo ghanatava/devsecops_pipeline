@@ -17,5 +17,13 @@ pipeline{
         sh "mvn -f /var/lib/jenkins/workspace/webapp/webapp-master/pom.xml clean package "
       }
     }
+    stage ("Deploy"){
+      steps{
+        sshagent([prod]){
+          sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/webapp/webapp-master/target/*.war ubuntu@ip-172-31-14-104:/home/ubuntu/prod/apache-tomcat-9.0.84/webapps/webapp.war"
+          
+        }
+      }
+    }
   }
 }
