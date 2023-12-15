@@ -18,8 +18,20 @@ pipeline{
         sh "rm trufflehog || true"
         sh "docker run gesellix/trufflehog --json https://github.com/ghanatava/devsecops_pipeline.git > trufflehog"
         sh "cat trufflehog"
+        sh "./owasp-dependency-check.sh"
       }
     }
+
+    stage ("source-composition-analysis"){
+      steps{
+        sh "cd webapp-master"
+        sh "rm owasp* || true"
+        sh "wget https://raw.githubusercontent.com/ghanatava/devsecops_pipeline/main/webapp-master/owasp-dependency-check.sh"
+        sh "chmod +x owasp-dependency-check.sh"
+        
+      }
+    }
+    
     stage("build"){
       steps{
         sh "mvn -f /var/lib/jenkins/workspace/webapp/webapp-master/pom.xml clean package "
