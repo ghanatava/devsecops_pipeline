@@ -23,8 +23,7 @@ pipeline{
     stage ("SAST"){
       steps{
         withSonarQubeEnv("sonar"){
-          sh "cd /var/lib/jenkins/workspace/webapp/webapp-master/"
-          sh "mvn sonar:sonar"
+          sh "mvn -f /var/lib/jenkins/workspace/webapp/webapp-master/pom.xml sonar:sonar"
           sh "cat target/sonar/report-task.txt"
         }
       }
