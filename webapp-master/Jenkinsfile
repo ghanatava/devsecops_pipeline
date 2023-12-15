@@ -14,10 +14,7 @@ pipeline{
     }
     stage("build"){
       steps{
-        dir('devsecops_pipeline/webapp-master') {
-           // Run Maven clean and package commands
-           sh 'mvn clean package'
-        }
+        sh "mvn -f /var/lib/jenkins/workspace/webapp/webapp-master/pom.xml clean package "
       }
     }
   }
